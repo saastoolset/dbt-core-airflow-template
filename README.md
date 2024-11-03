@@ -12,7 +12,8 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
 - [`dbt-core` Airflow Tutorial](#dbt-core-airflow-tutorial)
   - [Preparation](#preparation)
     - [Prerequisites](#prerequisites)
-    - [Install podman in WSL2 Ubuntu](#install-podman-in-wsl2-ubuntu)
+    - [Install podman in WSL2 Ubuntu 20.04](#install-podman-in-wsl2-ubuntu-2004)
+    - [Set Podman’s Docker-Compatible API Service in WSL Ubuntu](#set-podmans-docker-compatible-api-service-in-wsl-ubuntu)
     - [Install Astro CLI](#install-astro-cli)
     - [Create repository](#create-repository)
     - [Create venv with dbt](#create-venv-with-dbt)
@@ -38,7 +39,7 @@ dbt tutorial
 - git client
 - Visual Code
 
-### Install podman in WSL2 Ubuntu
+### Install podman in WSL2 Ubuntu 20.04
   
 - Ref to [Podman Installation on Ubuntu](https://gist.github.com/nikAizuddin/1c1822bd32b3c449433d0f81f796b71d)
 - install Podman:
@@ -123,6 +124,36 @@ default_ulimits = []
   sudo sysctl -w vm.max_map_count=300000
 
   ```
+
+### Set Podman’s Docker-Compatible API Service in WSL Ubuntu
+
+Default podman remote connect is ssh, but Astro required unix.
+
+- Start Podman’s Docker-Compatible API Service Manually
+
+```command
+podman system service --time=0 tcp:0.0.0.0:12345
+```
+
+- Set the DOCKER_HOST Environment Variable in WSL
+
+```command
+export DOCKER_HOST=tcp://localhost:12345
+```
+
+- To make this change persistent
+
+```command
+echo 'export DOCKER_HOST=tcp://localhost:12345' >> ~/.bashrc
+source ~/.bashrc
+```
+
+- Start podman service
+
+```command
+podman system service --time=0 tcp:0.0.0:12345 &
+
+```
 
 
 ### Install Astro CLI

@@ -4,8 +4,7 @@ import pendulum
 from airflow import DAG
 from airflow_dbt_python.operators.dbt import DbtRunOperator
 
-from include.profiles import airflow_db
-from include.constants import jaffle_shop_path, venv_execution_config
+from include.constants import jaffle_shop_path
 
 
 with DAG(

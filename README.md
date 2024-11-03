@@ -65,7 +65,6 @@ podman info
 
 ```bash
 sudo cp -v /usr/share/containers/containers.conf /etc/containers/
-
 ```
 
 - update /etc/containers/containers.conf
@@ -96,7 +95,6 @@ default_ulimits = []
 
   ```bash
   mkdir ~/.config/containers
-
   ```
   
   - update ***/etc/containers/containers.conf***
@@ -107,22 +105,20 @@ default_ulimits = []
   "net.ipv4.ping_group_range=0 0",
   "net.ipv4.ip_forward=1"
   ]  
-
   ```
 
 - set max virtual memory regions that single process can use
   - max_map_count, at least 262144
   - update /etc/sysctl.conf
 
-  ```
+  ```editor
   vm.max_map_count=300000
-
   ```
 
   - To apply vm.max_map_count
+
   ```bash
   sudo sysctl -w vm.max_map_count=300000
-
   ```
 
 ### Set Podman’s Docker-Compatible API Service in WSL Ubuntu
@@ -152,7 +148,6 @@ source ~/.bashrc
 
 ```command
 podman system service --time=0 tcp:0.0.0:12345 &
-
 ```
 
 

@@ -20,7 +20,6 @@ In this tutorial, for the purpose of `dbt-core` exercises, I made some modificat
     - [Project Set Up](#project-set-up)
   - [Deployment](#deployment)
     - [Overview](#overview)
-    - [dbt-cloud](#dbt-cloud)
     - [dbt-core](#dbt-core)
 
 ## Preparation
@@ -150,7 +149,7 @@ curl -sSL install.astronomer.io | sudo bash -s
   ```
 
 
-- optional, Install Astro CLI on Windows
+- Optional, Install Astro CLI on Windows
 
   - Open Windows PowerShell as an administrator and then run the following command:
 
@@ -248,45 +247,6 @@ cd jaffle_shop
 dbt debug
 ```
 
-- Load sample data
-  
-  We should copy this data from the `db/seeds` directory.
-
-  - Edit `dbt_project.yml`
-  Now we should create the `dbt_project.yml` file on the `jaffle_shop` directory. Append following config:
-
-  ```YAML
-  seeds:
-    jaffle_shop:
-      +schema: seeds
-  ```
-
-  - copy seeds data
-
-  ```command
-  copy ..\db\seeds\*.csv seeds
-  dbt seed  
-  ```
-
-  - create source table
-
-  ```command
-  ..\bin\db-psql raw bin/init_src.sql
-  ```
-
-- Verfiy result in database client
-This command will spin and will create the `jaffle_shop_seeds` schema, and create and insert the `.csv` files to the following tables:
-
-- `jaffle_shop_seeds.customers`
-- `jaffle_shop_seeds.orders`
-- `jaffle_shop_seeds.payments`
-
-To meet train course scenario, copy to source table, verify following tables:
-
-- `jaffle_shop.customers`
-- `jaffle_shop.orders`
-- `strip.payments`
-
 
 ## Deployment
 
@@ -297,12 +257,19 @@ To meet train course scenario, copy to source table, verify following tables:
 - This is done in a development environment using a development schema (dbt_jsmith) and typically on a non-default branch (i.e. feature/customers-model, fix/date-spine-issue). After making the appropriate changes, the development branch is merged to main/master so that those changes can be used in deployment.
 - Deployment in dbt (or running dbt in production) is the process of running dbt on a schedule in a deployment environment. The deployment environment will typically run from the default branch 
 
-### dbt-cloud
-
-- A deployment environment can be configured in dbt Cloud on the Environments page.
-- Scheduling of future jobs can be configured in dbt Cloud on the Jobs page.
-
-
 ### dbt-core
 
 - Scheduling of future jobs can run by Airflow or other scheduler
+
+  - run airflow
+
+  ```command
+  astro dev start
+  ```
+
+
+  - stop airflow
+
+  ```command
+  astro dev stop
+  ```
